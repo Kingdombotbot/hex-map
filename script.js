@@ -12,35 +12,13 @@ const bounds = [[0, 0], [imageHeight, imageWidth]];
 L.imageOverlay("hexmap.png", bounds).addTo(map);
 map.fitBounds(bounds);
 
-// Hex settings
-const cols = 11;
-const rows = 9;
-const hexWidth = 180;
-const hexHeight = 160;
-const xSpacing = 135; // horizontal spacing between hexes
-const ySpacing = 140; // vertical spacing
-const xOffset = 90;   // how much odd rows shift right
+// DEBUG: place one visible circle in the middle of the map
+L.circle([imageHeight / 2, imageWidth / 2], {
+  radius: 50,
+  color: "red",
+  fillColor: "red",
+  fillOpacity: 0.6,
+}).addTo(map).bindTooltip("Center Test", { permanent: true, direction: "top" });
 
-const letters = "ABCDEFGHIJK".split("");
-
-// Draw hex markers
-for (let row = 0; row < rows; row++) {
-  for (let col = 0; col < cols; col++) {
-    const hexId = `${letters[col]}${row + 1}`;
-    const y = row * ySpacing + 80; // top margin
-    const x = col * xSpacing + (row % 2 === 1 ? xOffset : 0) + 90;
-
-    const marker = L.circle([y, x], {
-      radius: 18,
-      color: "#00ffcc",
-      fillColor: "#00ffcc",
-      fillOpacity: 0.4,
-    })
-      .addTo(map)
-      .bindTooltip(hexId, { permanent: true, direction: "center", className: "hex-label" })
-      .on("click", () => {
-        alert(`You clicked hex ${hexId}`);
-      });
-  }
-}
+// Hex grid settings (we'll re-enable this once debug is confirmed)
 
