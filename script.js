@@ -27,10 +27,10 @@ const letters = "ABCDEFGHIJK".split("");
 for (let row = 0; row < rows; row++) {
   for (let col = 0; col < cols; col++) {
     const hexId = `${letters[col]}${row + 1}`;
-    const y = row * ySpacing + 80; // small top margin
+    const y = row * ySpacing + 80; // top margin
     const x = col * xSpacing + (row % 2 === 1 ? xOffset : 0) + 90;
 
-    const marker = L.circleMarker([y, x], {
+    const marker = L.circle([y, x], {
       radius: 18,
       color: "#00ffcc",
       fillColor: "#00ffcc",
@@ -43,3 +43,4 @@ for (let row = 0; row < rows; row++) {
       });
   }
 }
+
