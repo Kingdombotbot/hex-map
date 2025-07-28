@@ -20,23 +20,23 @@ L.circle([imageHeight / 2, imageWidth / 2], {
   fillOpacity: 0.6,
 }).addTo(map).bindTooltip("Center Test", { permanent: true, direction: "top" });
 
-// Updated Hex settings
+// Updated Hex Settings
 const cols = 11;
 const rows = 9;
-const hexWidth = 160;
-const hexHeight = 140;
-const xSpacing = 125; // tighter horizontal spacing
-const ySpacing = 120; // tighter vertical spacing
-const xOffset = 62;   // half of hexWidth * ~0.75
+const hexWidth = 220;
+const hexHeight = 200;
+const xSpacing = 190;
+const ySpacing = 175;
+const xOffset = 95;
 
 const letters = "ABCDEFGHIJK".split("");
 
-// Draw hex markers (now centered properly)
+// Draw hex markers (bottom-up)
 for (let row = 0; row < rows; row++) {
   for (let col = 0; col < cols; col++) {
-    const hexId = `${letters[col]}${row + 1}`;
+    const hexId = `${letters[col]}${rows - row}`; // Flip Y-axis
 
-    // Center grid around middle of map
+    // Recalculate to anchor bottom-left (A1)
     const xStart = (imageWidth - (cols * xSpacing)) / 2;
     const yStart = (imageHeight - (rows * ySpacing)) / 2;
 
@@ -44,13 +44,17 @@ for (let row = 0; row < rows; row++) {
     const x = xStart + col * xSpacing + (row % 2 === 1 ? xOffset : 0);
 
     const marker = L.circle([y, x], {
-      radius: 18,
+      radius: 22,
       color: "#00ffcc",
       fillColor: "#00ffcc",
       fillOpacity: 0.4,
     })
       .addTo(map)
-      .bindTooltip(hexId, { permanent: true, direction: "center", className: "hex-label" })
+      .bindTooltip(hexId, {
+        permanent: true,
+        direction: "center",
+        className: "hex-label",
+      })
       .on("click", () => {
         alert(`You clicked hex ${hexId}`);
       });
